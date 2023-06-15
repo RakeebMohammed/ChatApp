@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { format } from "timeago.js";
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -32,7 +32,7 @@ function Chat({ socket, Room, Username }) {
   return (
     <div className="h-screen lg:w-2/3  lg:ml-[250px]  bg-slate-200   p-2 ">
       <ScrollToBottom>
-        <div className=" min-h-[655px] flex flex-col  ">
+        <div className=" min-h-[655px]  flex flex-col  ">
           {MessgeList.map((message, key) => {
             return (
               <>
@@ -44,11 +44,7 @@ function Chat({ socket, Room, Username }) {
                   }
                   key={key}
                 >
-                  {message.author === Username ? (
-                    ""
-                  ) : (
-                    <p className="mx-5 py-1">{message.author}</p>
-                  )}
+                 
                   <p className="text-white px-4 py-1 border-2 rounded-xl bg-blue-700 ">
                     {message.text}
                   </p>
@@ -57,11 +53,15 @@ function Chat({ socket, Room, Username }) {
                   className={
                     message.author === Username
                       ? "flex   justify-end mb-3"
-                      : "flex mb-3 justify-start ml-[80px] "
+                      : "flex mb-3 justify-start ml-[10px] "
                   }
-                >
+                > {message.author === Username ? (
+                  ""
+                ) : (
+                  <p className="text-amber-900 py-1">{message.author}</p>
+                )}
                  
-                  <p className="mx-5">{format(message.time)}</p>
+                  <p className="mx-6 py-1">{format(message.time)}</p>
                 </div>
               </>
             );
