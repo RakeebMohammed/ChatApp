@@ -2,7 +2,9 @@ import React, {  useState } from 'react'
 import io from 'socket.io-client'
 import Chat from './Chat';
 
-const socket=io('https://kirmaani-api.onrender.com')
+//const socket=io('https://kirmaani-api.onrender.com')
+const socket=io('http://localhost:3001')
+
 console.log(socket);
 function Join() {
 const [Username, setUsername] = useState('')

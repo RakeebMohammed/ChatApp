@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { format } from "timeago.js";
 import ScrollToBottom from "react-scroll-to-bottom";
+import moment from "moment";
 function Chat({ socket, Room, Username }) {
   const [Message, setMessage] = useState("");
   const [MessgeList, setMessgeList] = useState([]);
@@ -13,7 +13,7 @@ function Chat({ socket, Room, Username }) {
 
         console.log(MessgeList);
       },
-      [socket]
+      
     );
   }, [socket]);
   const sendMessage = async () => {
@@ -22,7 +22,7 @@ function Chat({ socket, Room, Username }) {
         author: Username,
         room: Room,
         text: Message,
-        time: Date.now(),
+        time: new Date().toISOString(),
       };
       await socket.emit("send_message", Details);
       setMessgeList((list) => [...list, Details]);
@@ -32,7 +32,7 @@ function Chat({ socket, Room, Username }) {
   return (
     <div className="h-screen lg:w-2/3  lg:ml-[250px]  bg-slate-200   p-2 ">
       <ScrollToBottom>
-        <div className=" min-h-[655px]  flex flex-col  ">
+        <div className=" max-h-[655px]  flex flex-col  ">
           {MessgeList.map((message, key) => {
             return (
               <>
@@ -61,7 +61,7 @@ function Chat({ socket, Room, Username }) {
                   <p className="text-amber-900 py-1">{message.author}</p>
                 )}
                  
-                  <p className="mx-6 py-1">{format(message.time)}</p>
+                  <p className="mx-6 py-1">{moment(message.time).fromNow()}</p>
                 </div>
               </>
             );
